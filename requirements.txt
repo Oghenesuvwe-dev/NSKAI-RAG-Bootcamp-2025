@@ -4,5 +4,4 @@ langchain-groq
 langchain-community
 yt-dlp
 python-dotenv
-numpy
-scipy
+faiss-cpu

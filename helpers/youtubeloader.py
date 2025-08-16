@@ -27,12 +27,18 @@ def load_youtube_transcript(url):
             
             if 'en' in subtitles:
                 # Use manual subtitles if available
-                subtitle_url = subtitles['en'][0]['url']
-                transcript_text = _extract_text_from_subtitle_url(subtitle_url)
+                for subtitle in subtitles['en']:
+                    if subtitle.get('ext') in ['vtt', 'srv3', 'srv2', 'srv1']:
+                        subtitle_url = subtitle['url']
+                        transcript_text = _extract_text_from_subtitle_url(subtitle_url)
+                        break
             elif 'en' in auto_subtitles:
                 # Use auto-generated subtitles
-                subtitle_url = auto_subtitles['en'][0]['url']
-                transcript_text = _extract_text_from_subtitle_url(subtitle_url)
+                for subtitle in auto_subtitles['en']:
+                    if subtitle.get('ext') in ['vtt', 'srv3', 'srv2', 'srv1']:
+                        subtitle_url = subtitle['url']
+                        transcript_text = _extract_text_from_subtitle_url(subtitle_url)
+                        break
             else:
                 raise Exception("No English subtitles found")
             
@@ -59,20 +65,42 @@ def _extract_text_from_subtitle_url(subtitle_url):
     """Extract text from subtitle URL"""
     import urllib.request
     import xml.etree.ElementTree as ET
+    import json
     
     try:
         with urllib.request.urlopen(subtitle_url) as response:
             subtitle_data = response.read().decode('utf-8')
         
-        # Parse XML and extract text
-        root = ET.fromstring(subtitle_data)
-        text_parts = []
+        # Try JSON format first (newer YouTube format)
+        if subtitle_data.strip().startswith('{'):
+            try:
+                data = json.loads(subtitle_data)
+                text_parts = []
+                if 'events' in data:
+                    for event in data['events']:
+                        if 'segs' in event:
+                            for seg in event['segs']:
+                                if 'utf8' in seg:
+                                    text_parts.append(seg['utf8'])
+                return ' '.join(text_parts)
+            except:
+                pass
         
-        for text_elem in root.findall('.//text'):
-            if text_elem.text:
-                text_parts.append(text_elem.text)
+        # Try XML format
+        try:
+            root = ET.fromstring(subtitle_data)
+            text_parts = []
+            
+            for text_elem in root.findall('.//text'):
+                if text_elem.text:
+                    text_parts.append(text_elem.text)
+            
+            return ' '.join(text_parts)
+        except:
+            pass
         
-        return ' '.join(text_parts)
+        # Fallback: treat as plain text
+        return subtitle_data
     
     except Exception as e:
         raise Exception(f"Failed to extract subtitle text: {str(e)}")

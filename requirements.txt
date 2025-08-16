@@ -2,6 +2,7 @@ streamlit
 langchain
 langchain-groq
 langchain-community
-chromadb
 yt-dlp
 python-dotenv
+numpy
+scipy

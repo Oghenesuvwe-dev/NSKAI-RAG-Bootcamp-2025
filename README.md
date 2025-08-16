@@ -16,8 +16,10 @@ This is an interactive Q&A application that allows you to "chat" with any YouTub
 - **UI:** Streamlit
 - **LLM:** Groq (Llama 3 8B)
 - **Embedding Model:** Custom hash-based embeddings (Groq-only)
-- **Vector Store:** ChromaDB (in-memory)
+- **Vector Store:** Simple in-memory vector store (numpy/scipy)
 - **Data Loader:** `yt-dlp`
+
+> **Note:** Streamlit Cloud runs with an old SQLite version that's incompatible with ChromaDB. So, ChromaDB is replaced with a simpler in-memory vector store.
 
 ## Getting Started
 
@@ -58,7 +60,8 @@ pip install -r requirements.txt
 - `langchain` - RAG framework
 - `langchain-groq` - Groq LLM integration
 - `langchain-community` - Community integrations
-- `chromadb` - Vector database
+- `numpy` - Numerical operations
+- `scipy` - Scientific computing for similarity calculations
 - `yt-dlp` - YouTube transcript extraction
 - `python-dotenv` - Environment variable management
 
@@ -130,6 +133,6 @@ The application follows a standard RAG pipeline:
 
 1. **Ingestion:** The `youtubeloader` fetches the video transcript using `yt-dlp` and cleans it.
 2. **Chunking:** The `chunker` splits the clean transcript into smaller, overlapping documents.
-3. **Indexing:** The `vectorstore` helper uses custom hash-based embeddings to create numerical vectors for each chunk and stores them in a Chroma vector database.
-4. **Retrieval:** When a question is asked, the `retriever` finds the most relevant chunks from ChromaDB using similarity search.
+3. **Indexing:** The `vectorstore` helper uses custom hash-based embeddings to create numerical vectors for each chunk and stores them in a simple in-memory vector store.
+4. **Retrieval:** When a question is asked, the `retriever` finds the most relevant chunks using cosine similarity search.
 5. **Generation:** The top-ranked chunks and the original question are passed to the Groq LLM within a structured prompt, which then generates the final, grounded answer.

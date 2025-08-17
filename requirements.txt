@@ -1,0 +1,8 @@
+streamlit
+langchain
+langchain-groq
+langchain-community
+yt-dlp
+python-dotenv
+chromadb
+youtube-transcript-api

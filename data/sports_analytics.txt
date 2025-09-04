@@ -1,0 +1,27 @@
+SPORTS ANALYTICS REPORT - PREMIER LEAGUE TITLE RACE
+Date: April 1, 2024
+Source: The Athletic Analytics Team
+
+TITLE PROBABILITY ANALYSIS POST ARSENAL vs MANCHESTER CITY
+
+Following Arsenal's 1-0 victory over Manchester City on March 31, 2024, our statistical models have recalculated the Premier League title probabilities:
+
+BEFORE THE MATCH:
+- Manchester City: 65%
+- Arsenal: 20% 
+- Liverpool: 15%
+
+AFTER THE MATCH:
+- Manchester City: 45%
+- Arsenal: 27%
+- Liverpool: 28%
+
+KEY FACTORS:
+1. Liverpool's games in hand (2 matches) provide significant opportunity
+2. City's dropped points reduce their margin for error
+3. Arsenal's momentum boost from beating City directly
+
+REMAINING FIXTURES ANALYSIS:
+Liverpool face easier opponents in their remaining games compared to City and Arsenal. If Liverpool win their games in hand, they would move to 76 points, ahead of both rivals.
+
+The title race is now genuinely three-way, with Liverpool emerging as dark horses despite not playing in this crucial fixture.

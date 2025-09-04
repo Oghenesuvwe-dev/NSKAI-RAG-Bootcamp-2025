@@ -1,0 +1,7 @@
+Sample document for testing the multi-hop research agent.
+
+Company X reported weak Q3 earnings with a 15% decline in revenue.
+The stock price dropped by 8% following the earnings announcement.
+
+Company Y is a major supplier to Company X, providing 40% of their components.
+Company Y's stock price fell by 5% after Company X's earnings report.

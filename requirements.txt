@@ -7,4 +7,4 @@ streamlit==1.48.1
 requests==2.31.0
 yfinance==0.2.18
 plotly==5.17.0
-pandas==2.1.4
+pandas>=2.2.0

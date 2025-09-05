@@ -1,0 +1,40 @@
+version: '3.8'
+
+services:
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    command: redis-server --appendonly yes
+    restart: unless-stopped
+
+  rag-api:
+    build: .
+    ports:
+      - "8010:8010"
+    environment:
+      - GROQ_API_KEY=${GROQ_API_KEY}
+    volumes:
+      - ./data:/app/data
+      - ./logs:/app/logs
+      - ./chroma_db:/app/optimized_chroma_db
+    depends_on:
+      - redis
+    restart: unless-stopped
+    command: python -m uvicorn optimized_rag:app --host 0.0.0.0 --port 8010
+
+  streamlit:
+    build: .
+    ports:
+      - "8501:8501"
+    environment:
+      - RAG_API_URL=http://rag-api:8010
+    depends_on:
+      - rag-api
+    restart: unless-stopped
+    command: streamlit run enhanced_streamlit_app.py --server.port 8501 --server.address 0.0.0.0
+
+volumes:
+  redis_data:

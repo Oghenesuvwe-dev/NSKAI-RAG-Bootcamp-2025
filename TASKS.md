@@ -37,7 +37,7 @@
 
 ## 🎯 Current Status
 **APIs Integrated:** 3 (Groq LLM, Yahoo Finance, LiveScore)  
-**RAG Engines:** 7 (Mock, Real, Market Data, Vector, Enhanced, Production, Optimized)  
+**RAG Engines:** 6 (Real, Market Data, Vector, Enhanced, Production, Optimized)  
 **Frontends:** 5 Streamlit apps with advanced UI  
 **Vector Database:** ChromaDB with semantic embeddings  
 **Document Processing:** Multi-format (PDF, CSV, Excel, JSON, MD)  

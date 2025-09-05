@@ -14,14 +14,14 @@ AI agent that decomposes complex questions into sub-queries, retrieves evidence 
 pip install -r requirements.txt
 echo "GROQ_API_KEY=your_key" > .env
 
-# Real RAG (Recommended)
+# Production RAG (Recommended)
+python -m uvicorn optimized_rag:app --port 8010 & streamlit run enhanced_streamlit_app.py
+
+# Real RAG
 python -m uvicorn real_rag_engine:app --port 8006 & streamlit run final_streamlit_app.py
 
 # Market Data RAG  
 python -m uvicorn market_data_rag:app --port 8004 & streamlit run market_streamlit_app.py
-
-# Mock RAG
-python -m uvicorn mock_rag_engine:app --port 8003 & streamlit run advanced_streamlit_app.py
 ```
 
 ## 🔍 Features
@@ -66,9 +66,9 @@ User Query → Decomposition → Multi-Hop Retrieval → Synthesis → Cited Ans
 
 | System | Port | Endpoints |
 |--------|------|----------|
-| **Real RAG** (Recommended) | 8006 | `POST /query`, `GET /documents`, `GET /health` |
+| **Production RAG** (Recommended) | 8010 | `POST /query`, `GET /health`, `GET /performance` |
+| **Real RAG** | 8006 | `POST /query`, `GET /documents`, `GET /health` |
 | **Market Data** | 8004 | `POST /query`, `GET /market/{symbol}`, `GET /health` |
-| **Mock RAG** | 8003 | `POST /query`, `GET /documents`, `GET /health` |
 
 ## 🎯 NSKAI Hackathon Submission
 

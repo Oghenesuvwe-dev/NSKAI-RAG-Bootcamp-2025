@@ -12,7 +12,7 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-API_BASE_URL = "http://localhost:8009"
+API_BASE_URL = "http://localhost:8010"
 
 # Initialize session state
 if "query_history" not in st.session_state:

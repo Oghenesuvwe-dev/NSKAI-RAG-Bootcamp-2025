@@ -2,103 +2,31 @@ import streamlit as st
 import requests
 import json
 import time
-from datetime import datetime
 
 st.set_page_config(
-    page_title="Advanced Multi-Hop RAG Agent", 
-    page_icon="🚀",
-    layout="wide",
-    initial_sidebar_state="expanded"
+    page_title="Market Data RAG Agent", 
+    page_icon="📈",
+    layout="wide"
 )
 
-# Custom CSS for modern UI
-st.markdown("""
-<style>
-.main-header {
-    background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
-    padding: 2rem;
-    border-radius: 10px;
-    color: white;
-    text-align: center;
-    margin-bottom: 2rem;
-}
-.category-card {
-    background: #f8f9fa;
-    padding: 1rem;
-    border-radius: 8px;
-    border-left: 4px solid #007bff;
-    margin: 0.5rem 0;
-}
-</style>
-""", unsafe_allow_html=True)
-
-st.markdown("""
-<div class="main-header">
-    <h1>🚀 Advanced Multi-Hop RAG Agent</h1>
-    <p>Finance • Sports • Business Intelligence with Real-World Data</p>
-</div>
-""", unsafe_allow_html=True)
+st.title("📈 Market Data RAG Multi-Hop Agent")
+st.markdown("**Real-Time Market Analysis with Multi-Document Reasoning**")
+st.markdown("---")
 
 API_URL = "http://localhost:8004"
-
-# Sidebar for categories and system status
-with st.sidebar:
-    st.header("🎯 Query Categories")
-    
-    category = st.selectbox(
-        "Choose Analysis Type:",
-        ["💰 Finance & Markets", "⚽ Sports & Competitions", "🏢 Business Intelligence"]
-    )
-    
-    st.divider()
-    
-    # System status
-    st.header("🔧 System Status")
-    try:
-        health = requests.get(f"{API_URL}/health", timeout=2)
-        if health.status_code == 200:
-            data = health.json()
-            st.success("✅ Multi-Hop RAG Online")
-            st.info(f"🤖 Model: {data.get('model', 'Unknown')}")
-            st.info(f"📈 Real-Time Data: {data.get('real_time_data', False)}")
-        else:
-            st.error("❌ System Offline")
-    except:
-        st.error("❌ Cannot connect to system")
 
 col1, col2 = st.columns([2, 1])
 
 with col1:
-    st.subheader(f"{category} Query Interface")
+    st.subheader("🎯 Market Analysis Query")
     
-    # Category-specific queries
-    if category == "💰 Finance & Markets":
-        market_queries = {
-            "Select example...": "",
-            "Stock Impact Analysis": "How did Microsoft's OpenAI investment affect Google's stock price?",
-            "AI Market Impact": "What's the impact of GenAI adoption on NVIDIA and tech stocks?",
-            "Earnings Analysis": "How did Apple's latest earnings affect the broader tech sector?",
-            "Market Correlation": "What's the relationship between Tesla and Bitcoin prices?",
-            "Custom Query": ""
-        }
-    elif category == "⚽ Sports & Competitions":
-        market_queries = {
-            "Select example...": "",
-            "Premier League Prediction": "Based on current form, who will win the Premier League this season?",
-            "World Cup Analysis": "Which team has the best chance to win the next World Cup?",
-            "AFCON Prediction": "Who are the favorites for the next Africa Cup of Nations?",
-            "Arsenal Title Chances": "How did Arsenal's recent victories affect their title chances?",
-            "Custom Query": ""
-        }
-    else:  # Business Intelligence
-        market_queries = {
-            "Select example...": "",
-            "GenAI Market Impact": "How is generative AI transforming the tech industry economics?",
-            "Big Tech AI Race": "Compare Microsoft, Google, and Amazon's AI strategies and market impact",
-            "OpenAI Deal Analysis": "What was the impact of Microsoft's OpenAI partnership on cloud revenues?",
-            "AI Investment Trends": "How are AI investments affecting Big Tech valuations?",
-            "Custom Query": ""
-        }
+    market_queries = {
+        "Select example...": "",
+        "Stock Impact Analysis": "How did AAPL's latest earnings affect MSFT's stock price?",
+        "Market Correlation": "What's the relationship between TSLA stock performance and NVDA?",
+        "Sector Analysis": "How did tech sector news impact GOOGL and META stocks?",
+        "Custom Query": ""
+    }
     
     selected_query = st.selectbox("Choose market query:", list(market_queries.keys()))
     

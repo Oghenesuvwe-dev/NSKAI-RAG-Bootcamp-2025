@@ -7,8 +7,6 @@ import json
 import yfinance as yf
 import requests
 from datetime import datetime, timedelta
-import pandas as pd
-from typing import Dict, List, Any
 
 load_dotenv()
 
@@ -91,131 +89,14 @@ def get_livescore_data(match_id: str = "335680") -> dict:
             "fallback_used": True
         }
 
-def get_football_data(query: str) -> dict:
-    """Get football data - Premier League, World Cup, predictions"""
-    football_db = {
-        "premier_league": {
-            "standings": [
-                {"team": "Arsenal", "points": 84, "position": 1, "form": "WWWWW"},
-                {"team": "Manchester City", "points": 82, "position": 2, "form": "WWLWW"},
-                {"team": "Liverpool", "points": 78, "position": 3, "form": "WDWWW"}
-            ],
-            "prediction": "Arsenal leads by 2 points with 4 games remaining. 65% chance to win title."
-        },
-        "world_cup": {
-            "favorites": ["Brazil", "Argentina", "France", "England"],
-            "prediction": "Brazil 28% chance, Argentina 24% chance based on FIFA rankings and recent form."
-        },
-        "afcon": {
-            "recent_winner": "Senegal",
-            "next_favorites": ["Nigeria", "Egypt", "Morocco", "Senegal"],
-            "prediction": "Nigeria has strongest squad depth for next AFCON tournament."
-        }
-    }
-    
-    query_lower = query.lower()
-    
-    if any(word in query_lower for word in ["premier", "league", "arsenal", "city", "liverpool"]):
-        return {
-            "competition": "Premier League",
-            "data": football_db["premier_league"],
-            "source": "Football Data API",
-            "timestamp": datetime.now().isoformat()
-        }
-    elif any(word in query_lower for word in ["world", "cup", "brazil", "argentina"]):
-        return {
-            "competition": "World Cup",
-            "data": football_db["world_cup"],
-            "source": "FIFA Rankings",
-            "timestamp": datetime.now().isoformat()
-        }
-    elif any(word in query_lower for word in ["afcon", "africa", "nigeria", "egypt"]):
-        return {
-            "competition": "AFCON",
-            "data": football_db["afcon"],
-            "source": "CAF Data",
-            "timestamp": datetime.now().isoformat()
-        }
-    
-    return {
-        "competition": "General Football",
-        "data": {"message": "No specific competition data found"},
-        "source": "Football Database",
-        "timestamp": datetime.now().isoformat()
-    }
-
-def get_business_intelligence(query: str) -> dict:
-    """Get business intelligence - GenAI impact, Big Tech deals"""
-    business_db = {
-        "genai_impact": {
-            "market_size": "$15.7B in 2024, projected $148B by 2030",
-            "leaders": ["OpenAI", "Google", "Microsoft", "Anthropic"],
-            "impact": "30% productivity gains in software development, 25% in content creation"
-        },
-        "microsoft_deals": {
-            "openai_investment": "$13B investment in OpenAI",
-            "azure_growth": "35% revenue increase attributed to AI services",
-            "market_impact": "Stock up 28% since OpenAI partnership announcement"
-        },
-        "google_ai": {
-            "bard_launch": "Competing with ChatGPT",
-            "search_integration": "AI-powered search results",
-            "market_response": "Stock volatile due to AI competition concerns"
-        },
-        "amazon_ai": {
-            "aws_ai": "Bedrock AI platform for enterprises",
-            "alexa_enhancement": "Large language model integration",
-            "cloud_dominance": "Maintaining 32% cloud market share"
-        }
-    }
-    
-    query_lower = query.lower()
-    
-    if any(word in query_lower for word in ["genai", "artificial", "intelligence", "ai impact"]):
-        return {
-            "topic": "GenAI Market Impact",
-            "data": business_db["genai_impact"],
-            "source": "Market Research",
-            "timestamp": datetime.now().isoformat()
-        }
-    elif any(word in query_lower for word in ["microsoft", "openai", "azure"]):
-        return {
-            "topic": "Microsoft AI Strategy",
-            "data": business_db["microsoft_deals"],
-            "source": "Financial Reports",
-            "timestamp": datetime.now().isoformat()
-        }
-    elif any(word in query_lower for word in ["google", "bard", "alphabet"]):
-        return {
-            "topic": "Google AI Competition",
-            "data": business_db["google_ai"],
-            "source": "Tech Analysis",
-            "timestamp": datetime.now().isoformat()
-        }
-    elif any(word in query_lower for word in ["amazon", "aws", "bedrock"]):
-        return {
-            "topic": "Amazon AI Services",
-            "data": business_db["amazon_ai"],
-            "source": "Cloud Reports",
-            "timestamp": datetime.now().isoformat()
-        }
-    
-    return {
-        "topic": "General Business Intelligence",
-        "data": {"message": "AI transformation affecting all major tech companies"},
-        "source": "Business Analysis",
-        "timestamp": datetime.now().isoformat()
-    }
-
 def get_market_news(query: str) -> dict:
-    """Enhanced market news with real business intelligence"""
+    """Simulate market news retrieval"""
     news_db = {
-        "AAPL": "Apple Inc. reported strong Q4 earnings with revenue up 8% YoY. iPhone sales exceeded expectations despite supply chain challenges. AI integration in iOS driving services revenue.",
-        "TSLA": "Tesla stock volatile after Elon Musk's latest ventures. Production targets for 2024 remain unchanged. FSD technology showing promising results.",
-        "MSFT": "Microsoft Azure revenue growth accelerated to 35% in latest quarter. AI investments showing strong returns. OpenAI partnership driving enterprise adoption.",
-        "GOOGL": "Alphabet faces regulatory scrutiny over search monopoly. Ad revenue growth slowing amid economic headwinds. Bard AI competing with ChatGPT.",
-        "NVDA": "NVIDIA stock surges on AI chip demand. Data center revenue up 200% year-over-year. H100 chips in high demand for AI training.",
-        "AMZN": "Amazon AWS maintains cloud leadership with 32% market share. Bedrock AI platform gaining enterprise traction. Retail margins improving."
+        "AAPL": "Apple Inc. reported strong Q4 earnings with revenue up 8% YoY. iPhone sales exceeded expectations despite supply chain challenges.",
+        "TSLA": "Tesla stock volatile after Elon Musk's latest Twitter acquisition. Production targets for 2024 remain unchanged.",
+        "MSFT": "Microsoft Azure revenue growth accelerated to 35% in latest quarter. AI investments showing strong returns.",
+        "GOOGL": "Alphabet faces regulatory scrutiny over search monopoly. Ad revenue growth slowing amid economic headwinds.",
+        "NVDA": "NVIDIA stock surges on AI chip demand. Data center revenue up 200% year-over-year."
     }
     
     for symbol, news in news_db.items():
@@ -223,41 +104,37 @@ def get_market_news(query: str) -> dict:
             return {
                 "headline": f"{symbol} Market Update",
                 "content": news,
-                "source": "Enhanced Market News API",
+                "source": "Market News API",
                 "timestamp": datetime.now().isoformat()
             }
     
     return {
-        "headline": "Tech Market Update",
-        "content": "AI revolution driving tech valuations. Big Tech investing heavily in generative AI capabilities. Market showing strong confidence in AI adoption.",
-        "source": "Market Intelligence",
+        "headline": "General Market Update",
+        "content": "Markets showing mixed signals amid economic uncertainty. Tech stocks outperforming traditional sectors.",
+        "source": "Market News API",
         "timestamp": datetime.now().isoformat()
     }
 
 def intelligent_retrieval(sub_query: str, main_query: str) -> dict:
-    """Enhanced retrieval with finance, sports, and business intelligence"""
+    """Enhanced retrieval with real market and sports data"""
     query_lower = (sub_query + " " + main_query).lower()
     
-    # 1. Sports queries (Football, Premier League, World Cup, AFCON)
-    if any(word in query_lower for word in ["football", "soccer", "premier", "league", "world", "cup", "afcon", "arsenal", "liverpool", "city", "nigeria", "brazil"]):
-        return get_football_data(query_lower)
+    # Check for sports queries
+    if any(word in query_lower for word in ["match", "football", "soccer", "arsenal", "liverpool", "city", "sports"]):
+        return get_livescore_data()
     
-    # 2. Business Intelligence (GenAI, Big Tech deals)
-    if any(word in query_lower for word in ["genai", "artificial", "intelligence", "openai", "microsoft", "google", "amazon", "deal", "investment", "ai impact"]):
-        return get_business_intelligence(query_lower)
-    
-    # 3. Stock market data
+    # Extract stock symbols
     common_symbols = ["AAPL", "TSLA", "MSFT", "GOOGL", "NVDA", "AMZN", "META"]
     found_symbols = [s for s in common_symbols if s.lower() in query_lower]
     
     if found_symbols:
         symbol = found_symbols[0]
-        if any(word in query_lower for word in ["price", "stock", "trading", "market", "earnings"]):
+        if any(word in query_lower for word in ["price", "stock", "trading", "market"]):
             return get_stock_data(symbol)
-        elif any(word in query_lower for word in ["news", "report", "analysis"]):
+        elif any(word in query_lower for word in ["news", "earnings", "report"]):
             return get_market_news(sub_query)
     
-    # 4. Complex multi-company scenarios
+    # Fallback to mock data for complex scenarios
     if "company x" in query_lower and "company y" in query_lower:
         return {
             "content": "Company X reported 15% revenue decline in Q3. Company Y, its main supplier, saw stock drop 12% following the announcement.",
@@ -265,11 +142,7 @@ def intelligent_retrieval(sub_query: str, main_query: str) -> dict:
             "type": "financial_analysis"
         }
     
-    # 5. General market/tech queries
-    if any(word in query_lower for word in ["market", "tech", "economy", "finance"]):
-        return get_market_news(query_lower)
-    
-    return {"error": "No relevant data found for this query type"}
+    return {"error": "No relevant data found"}
 
 @app.post("/query", response_model=QueryResponse)
 def run_query(request: QueryRequest):

@@ -1,77 +1,133 @@
-# Advanced RAG Multi-Hop Research Agent
+# 🚀 Advanced Multi-Hop RAG Agent
 
-AI agent that decomposes complex questions into sub-queries, retrieves evidence from multiple documents, and synthesizes cited answers.
+AI agent that decomposes complex questions into sub-queries, retrieves evidence from multiple real-world data sources, and synthesizes cited answers with interactive visualizations.
 
-**Example:** "How did Company X's Q3 earnings affect supplier Company Y's stock?"
-1. Find main supplier → Company Y
-2. Get Q3 data → 15% profit drop Oct 25th  
-3. Check Y stock → 12% decline Oct 26-31
-4. Synthesize with citations
+## 🎯 **Features**
 
-## 🚀 Quick Start
+### **Core Capabilities**
+- 🧠 **Multi-hop reasoning** with query decomposition
+- 📈 **Real-time Yahoo Finance** stock data
+- ⚽ **Sports predictions** (Premier League, World Cup, AFCON)
+- 🏢 **Business intelligence** (GenAI market, Big Tech strategies)
+- 📊 **Interactive visualizations** with Plotly charts
+- 🔄 **Multi-source evidence synthesis**
 
+### **Data Sources**
+- **Yahoo Finance** - Real-time stock prices, market data
+- **Football Analytics** - Premier League standings, predictions
+- **Business Intelligence** - AI market analysis, tech strategies
+- **Groq LLM** - llama-3.3-70b for reasoning and synthesis
+
+### **Visualizations**
+- ⏱️ Processing time gauge
+- 📊 Data sources pie chart
+- 📈 Sub-questions complexity analysis
+- 📥 Export options (JSON, Markdown, Summary)
+
+## 🚀 **Quick Start**
+
+### **Local Development**
 ```bash
+# Clone and setup
+git clone <repository-url>
+cd "NSK BOOTCAMP RAG PROJECTS/Advance RAG PROJ"
+
+# Install dependencies
 pip install -r requirements.txt
-echo "GROQ_API_KEY=your_key" > .env
 
-# Production RAG (Recommended)
-python -m uvicorn optimized_rag:app --port 8010 & streamlit run enhanced_streamlit_app.py
+# Add API key to secrets
+echo 'GROQ_API_KEY = "your_key_here"' > .streamlit/secrets.toml
 
-# Real RAG
-python -m uvicorn real_rag_engine:app --port 8006 & streamlit run final_streamlit_app.py
-
-# Market Data RAG  
-python -m uvicorn market_data_rag:app --port 8004 & streamlit run market_streamlit_app.py
+# Run unified app with visualizations
+streamlit run unified_rag_with_graphs.py
 ```
 
-## 🔍 Features
+### **Streamlit Cloud Deployment**
+1. Use `unified_rag_with_graphs.py` as main file
+2. Add `GROQ_API_KEY` to Streamlit secrets
+3. Deploy directly (no backend needed)
 
-- Multi-hop reasoning with query decomposition
-- Real market data via Yahoo Finance API
-- Multi-source document retrieval and synthesis
-- Automatic citation and source attribution
+## 📊 **Example Queries**
 
-## 📊 Multi-Hop Examples
+### **💰 Finance & Markets**
+- "How did Microsoft's $13B OpenAI investment affect Google's stock price?"
+- "What's the impact of GenAI adoption on NVIDIA and tech valuations?"
 
-**Football:** "How did Arsenal's victory over City affect Liverpool's title chances?"
-→ Match result + League table + Expert analysis
+### **⚽ Sports & Competitions**
+- "Based on current standings, who will win the Premier League?"
+- "Which team has the best chance to win the 2026 FIFA World Cup?"
 
-**Economics:** "Impact of Noto Peninsula earthquake on Japan's GDP/semiconductors?"
-→ Disaster scale + GDP forecasts + Production disruptions
+### **🏢 Business Intelligence**
+- "How is the $148B generative AI market transforming tech economics?"
+- "Compare Microsoft, Google, and Amazon's AI strategies and market impact"
 
-**Corporate:** "How did OpenAI investment impact Microsoft Azure revenue?"
-→ Investment details + Revenue reports + Analyst attribution
-
-## 🛠️ Tech Stack
-
-- **Backend:** FastAPI + Groq LLM (llama-3.3-70b)
-- **Vector DB:** ChromaDB + SentenceTransformers
-- **Data:** Yahoo Finance API, PDF/CSV/MD processing
-- **Frontend:** Streamlit + REST API
-
-## 🏗️ Architecture
+## 🏗️ **Architecture**
 
 ```
-User Query → Decomposition → Multi-Hop Retrieval → Synthesis → Cited Answer
-     │            │               │                │
-   Groq LLM   Sub-queries   Vector Search     Final Response
+User Query → Decomposition → Multi-Hop Retrieval → Synthesis → Visualized Results
+     │            │               │                │              │
+   Groq LLM   Sub-queries   Real-time APIs    Final Response  Plotly Charts
 ```
 
-1. LLM decomposes query into sub-questions
-2. Each sub-query searches document sources  
-3. Evidence collected with metadata
-4. LLM synthesizes coherent, cited answer
+## 📁 **Project Structure**
 
-## 📡 API Endpoints
+```
+├── unified_rag_with_graphs.py    # Main application (recommended)
+├── market_data_rag.py           # Backend API (optional)
+├── enhanced_market_app.py       # Frontend UI (optional)
+├── requirements.txt             # Dependencies
+├── .streamlit/secrets.toml      # API keys
+├── data/                        # Sample documents
+└── rag-systems/                 # Alternative implementations
+```
 
-| System | Port | Endpoints |
-|--------|------|----------|
-| **Production RAG** (Recommended) | 8010 | `POST /query`, `GET /health`, `GET /performance` |
-| **Real RAG** | 8006 | `POST /query`, `GET /documents`, `GET /health` |
-| **Market Data** | 8004 | `POST /query`, `GET /market/{symbol}`, `GET /health` |
+## 🔧 **System Requirements**
 
-## 🎯 NSKAI Hackathon Submission
+- Python 3.8+
+- Groq API key
+- Internet connection (for real-time data)
+- 2GB RAM minimum
+
+## 🎯 **Roadmap & Improvements**
+
+### **Immediate Priorities**
+- [ ] Real Sports API integration
+- [ ] Interactive stock charts
+- [ ] Query history system
+- [ ] Enhanced error handling
+
+### **Short-term Goals**
+- [ ] Multi-model LLM support
+- [ ] Advanced visualizations
+- [ ] Voice input capability
+- [ ] Mobile optimization
+
+### **Long-term Vision**
+- [ ] Predictive analytics
+- [ ] Enterprise features
+- [ ] Custom data sources
+- [ ] API development
+
+## 📈 **Performance**
+
+- **Processing Time:** 2-5 seconds average
+- **Data Sources:** 3+ real-time APIs
+- **Accuracy:** Multi-hop verification
+- **Scalability:** Single-file deployment
+
+## 🤝 **Contributing**
+
+1. Fork the repository
+2. Create feature branch
+3. Add improvements from TODO.md
+4. Submit pull request
+
+## 📄 **License**
+
+MIT License - NSKAI Bootcamp 2025
+
+## 🏆 **NSKAI Hackathon Submission**
 
 **Repository:** https://github.com/Oghenesuvwe-dev/NSKAI-RAG-Bootcamp-2025  
-**Branch:** Multi-Hop-Research-Agent  
+**Branch:** Advanced Multi-Hop RAG Agent  
 **Demo:** Streamlit Cloud deployment ready

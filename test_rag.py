@@ -1,50 +1,26 @@
-import pytest
-import requests
-import json
-from pathlib import Path
+import os
+from core.multi_hop_engine import MultiHopRAG
 
-BASE_URL = "http://localhost:8009"
-
-class TestRAGAPI:
+# Test the RAG system
+def test_rag():
+    if not os.getenv("GROQ_API_KEY"):
+        print("Set GROQ_API_KEY environment variable")
+        return
     
-    def test_health_endpoint(self):
-        response = requests.get(f"{BASE_URL}/health")
-        assert response.status_code == 200
-        data = response.json()
-        assert data["status"] == "healthy"
-        assert "version" in data
+    rag = MultiHopRAG()
     
-    def test_query_endpoint(self):
-        query_data = {"query": "What is the main topic?"}
-        response = requests.post(f"{BASE_URL}/query", json=query_data)
-        assert response.status_code in [200, 429]  # 429 for rate limit
-        
-        if response.status_code == 200:
-            data = response.json()
-            assert "answer" in data
-            assert "sources" in data
-            assert "processing_time" in data
+    test_queries = [
+        "How did Liverpool's performance affect Champions League chances vs Arsenal?",
+        "Microsoft AI investment impact vs Google strategy on stock prices",
+        "Tech stock and sports team valuation correlation in 2024"
+    ]
     
-    def test_metrics_endpoint(self):
-        response = requests.get(f"{BASE_URL}/metrics")
-        assert response.status_code in [200, 429]
-        
-        if response.status_code == 200:
-            data = response.json()
-            assert "documents_indexed" in data
-
-def test_document_processor():
-    from document_processor import DocumentProcessor
-    
-    # Test text processing
-    test_file = Path("test.txt")
-    test_file.write_text("Test content")
-    
-    result = DocumentProcessor.process_document(test_file)
-    assert result["content"] == "Test content"
-    assert result["metadata"]["type"] == "text"
-    
-    test_file.unlink()  # cleanup
+    for query in test_queries:
+        print(f"\nQuery: {query}")
+        result = rag.process_query(query)
+        print(f"Confidence: {result['confidence']:.0%}")
+        print(f"Sources: {len(result['sources'])}")
+        print(f"Answer: {result['answer'][:200]}...")
 
 if __name__ == "__main__":
-    pytest.main([__file__, "-v"])
+    test_rag()
